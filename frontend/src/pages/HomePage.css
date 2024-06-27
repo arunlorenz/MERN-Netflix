@@ -1,0 +1,74 @@
+/* src/HomePage.css */
+.homepage {
+  position: relative;
+  height: 100vh;
+  background: url('../assets/background.jpg') center center / cover no-repeat;
+  color: white;
+}
+
+.homepage__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.homepage__logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 150px;
+}
+
+.homepage__content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.homepage__input {
+  display: absolute;
+  margin-top: 20px;
+}
+
+.homepage__input input {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  max-width: 300px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+.homepage__input button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #e50914;
+  border: none;
+  cursor: pointer;
+}
+
+.homepage__input button:hover {
+  background-color: #f40612;
+}
+
+.signin_button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 100px;
+  height: 35px;
+  padding: 06px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #e50914;
+  border-radius: 5px;
+  cursor: pointer;
+}

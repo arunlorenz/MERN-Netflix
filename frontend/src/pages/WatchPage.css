@@ -1,0 +1,107 @@
+/* WatchPage.css */
+
+.watch-page {
+  position: relative;
+  background-color: #111; /* Dark background */
+  color: #fff; /* Light text */
+  padding: 20px;
+}
+
+.watch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.watch-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.watch-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.watch-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.sign-in {
+  padding: 10px 20px;
+  background-color: #e50914; /* Netflix red */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.watch-content {
+  padding: 20px;
+}
+
+.featured {
+  margin-bottom: 30px;
+}
+
+.featured .title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.featured .details {
+  margin-bottom: 10px;
+}
+
+.featured .details .match {
+  background-color: #e50914; /* Netflix red */
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.featured .actions .play-button,
+.featured .actions .info-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.row {
+  margin-bottom: 30px;
+}
+
+.row h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.posters {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.posters img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.posters::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
+}
