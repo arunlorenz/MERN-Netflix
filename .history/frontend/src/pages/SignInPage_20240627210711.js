@@ -6,11 +6,17 @@ import './SignInPage.css';
 import logo from '../assets/netflix_logo.png'; // Adjust path as needed
 import { useHistory } from 'react-router-dom';
 
+import React, { useState } from 'react';
+import './SignInPage.css';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom'; // Import useHistory for navigation
+
 const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const history = useHistory();
+
+  const history = useHistory(); // Initialize useHistory hook
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +24,7 @@ const SignInPage = () => {
     else if (name === 'password') setPassword(value);
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -41,7 +47,6 @@ const SignInPage = () => {
       setMessage('Sign-in failed. Please try again.');
     }
   };
-
 
 // const SignInPage = () => {
 //   const [email, setEmail] = useState('');

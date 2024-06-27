@@ -1,9 +1,11 @@
+// Assuming you have initialized Express and connected to MongoDB using Mongoose
+
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Ensure User model is correctly imported
+const User = require('../models/User'); // Assuming User model is defined
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-// Sign-up route
+// POST /api/auth/signup
 router.post('/signup', async (req, res) => {
   const { email, password } = req.body;
 
@@ -29,37 +31,33 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+module.exports = router;
+ // Adjust the path to your User model
+
 // Sign-in route
 router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    // Check if user exists
-    const user = await User.findOne({ email });
+  if (!email || !password) {
+    return res.status(400).json({ msg: 'Please enter all fields' });
+  }
 
+  try {
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ msg: 'User not found' });
+      return res.status(400).json({ msg: 'User does not exist' });
     }
 
-    // Check password (for demonstration purposes without encryption)
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-      },
-    });
-
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 3600 });
+    res.json({ token, user: { id: user._id, email: user.email } });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

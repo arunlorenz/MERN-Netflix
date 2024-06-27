@@ -1,0 +1,43 @@
+// src/pages/SignInPage.js
+import React from 'react';
+import './SignInPage.css';
+import logo from '../assets/netflix_logo.png'; // Correct path to the logo
+
+
+
+const SignInPage = () => {
+  return (
+    <div className="signin-page">
+      <header className="signin-header">
+        <img src={logo} alt="Netflix Logo" className="logo" />
+      </header>
+      <div className="signin-content">
+        <form className="signin-form">
+          <h1>Sign In</h1>
+          <div className="input-group">
+            <input type="email" placeholder="Email or mobile number" required />
+          </div>
+          <div className="input-group">
+            <input type="password" placeholder="Password" required />
+          </div>
+          <button className="signin-button">Sign In</button>
+          <div className="divider">OR</div>
+          <button className="signin-code-button">Use a sign-in code</button>
+          <div className="forgot-password">Forgot password?</div>
+          <div className="remember-me">
+            <input type="checkbox" id="remember-me" />
+            <label htmlFor="remember-me">Remember me</label>
+          </div>
+          <div className="signup-now">
+            New to Netflix? <a href="/signup">Sign up now.</a>
+          </div>
+          <div className="recaptcha">
+            This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="/learn-more">Learn more.</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default SignInPage;

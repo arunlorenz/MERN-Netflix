@@ -1,28 +1,29 @@
+// auth.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Ensure User model is correctly imported
-const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+// const jwt = require('jsonwebtoken');
 
 // Sign-up route
 router.post('/signup', async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ msg: 'Please enter all fields' });
+  }
+
   try {
-    // Check if user already exists
     let user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    // Create new user instance
     user = new User({ email, password });
-
-    // Save user to database
     await user.save();
 
-    // Respond with success message
-    res.json({ msg: 'Signup successful' });
+    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // res.json({ token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -33,30 +34,21 @@ router.post('/signup', async (req, res) => {
 router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ msg: 'Please enter all fields' });
+  }
+
   try {
-    // Check if user exists
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ msg: 'User not found' });
+      return res.status(400).json({ msg: 'User does not exist' });
     }
 
-    // Check password (for demonstration purposes without encryption)
-    if (user.password !== password) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
-    }
-
-    // Generate JWT token
+    // Normally you would compare the hashed password here
+    // For debugging, assume password is correct
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-      },
-    });
-
+    res.json({ token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

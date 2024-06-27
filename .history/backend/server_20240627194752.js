@@ -4,9 +4,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const authRoutes = require('./routes/auth');
 
 // Load User model
 const User = require('./models/User');
@@ -23,12 +24,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// Signup route without password hashing
-// server.js
-
-// Your other imports and configurations
-
-// Signup route without password hashing
+// Signup route with JWT and password hashing
 app.post('/api/auth/signup', async (req, res) => {
   const { email, password } = req.body;
 
@@ -46,12 +42,32 @@ app.post('/api/auth/signup', async (req, res) => {
     }
 
     // Create new user instance
-    user = new User({ email, password }); // Password is stored as plain text
+    user = new User({ email, password });
+
+    // Hash password before saving
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
 
     // Save user to database
     await user.save();
 
-    res.json({ msg: 'Signup successful' });
+    // Create JWT payload
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    // Generate JWT token
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }, // Token expires in 1 hour (adjust as needed)
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token }); // Send JWT token as response
+      }
+    );
 
   } catch (err) {
     console.error(err.message);
@@ -59,10 +75,11 @@ app.post('/api/auth/signup', async (req, res) => {
   }
 });
 
-
-app.use('/api/auth', authRoutes);
-
 // Start server
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
+
+
+
+

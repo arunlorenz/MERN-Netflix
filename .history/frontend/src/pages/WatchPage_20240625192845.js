@@ -1,21 +1,12 @@
+// src/pages/WatchPage.js
+
 import React from 'react';
 import './WatchPage.css';
 import logo from '../assets/netflix_logo.png'; // Correct path to the logo
 import movie1 from '../assets/movie1.jpg'; // Example path to movie posters
-import { useHistory } from 'react-router-dom';
+
 
 const WatchPage = () => {
-  const history = useHistory();
-
-  // Function to handle logout
-  const handleLogout = () => {
-    // Implement logout logic here, such as clearing local storage, session data, etc.
-    // For example, clear localStorage.setItem('token', '');
-
-    // Redirect user to sign-in page or homepage after logout
-    history.push('/'); // Assuming '/' is your sign-in or homepage route
-  };
-
   return (
     <div className="watch-page">
       <header className="watch-header">
@@ -28,7 +19,7 @@ const WatchPage = () => {
           <a href="/">My List</a>
         </nav>
         <div className="watch-actions">
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
+          <button className="sign-in">Sign In</button>
         </div>
       </header>
       <div className="watch-content">

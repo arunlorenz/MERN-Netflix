@@ -24,11 +24,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error('MongoDB connection error:', err));
 
 // Signup route without password hashing
-// server.js
-
-// Your other imports and configurations
-
-// Signup route without password hashing
 app.post('/api/auth/signup', async (req, res) => {
   const { email, password } = req.body;
 
@@ -46,7 +41,7 @@ app.post('/api/auth/signup', async (req, res) => {
     }
 
     // Create new user instance
-    user = new User({ email, password }); // Password is stored as plain text
+    user = new User({ email, password });
 
     // Save user to database
     await user.save();
@@ -58,7 +53,6 @@ app.post('/api/auth/signup', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-
 
 app.use('/api/auth', authRoutes);
 
